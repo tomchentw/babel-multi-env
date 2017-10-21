@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`babel-multi-env bin should compile runnable script on the platform 1`] = `
+"This is a pen 
+"
+`;
