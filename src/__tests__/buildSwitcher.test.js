@@ -16,7 +16,10 @@ describe("buildSwitcher module", () => {
         {
           babelrc: false
         },
-        "buildAndOutputSwitcher.js"
+        {
+          filename: "buildAndOutputSwitcher.js",
+          parent: ""
+        }
       );
       const content = await readFile(
         path.join(outDir, "buildAndOutputSwitcher.js"),

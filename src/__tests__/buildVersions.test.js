@@ -20,15 +20,15 @@ describe("buildVersions module", () => {
         {
           babelrc: false
         },
-        path.join(
-          __dirname,
-          "../__fixtures__/buildAndOutputVersions.fixture.js"
-        )
+        {
+          filename: "src/__fixtures__/buildAndOutputVersions.fixture.js",
+          parent: "src/__fixtures__"
+        }
       );
       const content = await Promise.all(
         VERSIONS.map(it =>
           readFile(
-            path.join(outDir, `buildAndOutputVersions.fixture__${it}__.js`),
+            path.join(outDir, `buildAndOutputVersions__${it}__.fixture.js`),
             "utf8"
           )
         )
