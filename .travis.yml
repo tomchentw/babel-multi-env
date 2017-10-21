@@ -1,0 +1,18 @@
+dist: trusty
+sudo: required
+language: node_js
+node_js:
+- '4'
+- '6'
+- '8'
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - npm test -- --coverage
+after_script:
+  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && `node --version` == *v8* ]]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+env:
+  global:
+    secure: z+PhAQHa2iYO5cHXxOpiQwjPIcZDNr0LtePc19aLCabzuzk7MpmUpVbe6wTB3uOHmpUu0WyVPJcSl3kLUmOcGYFb4WOvKO8UCoe1ZIuMEqRqVSxcYR7nO675575/sl4uLpcGrSJFZDIO2woBFh0MlPr+WL77HRKc61/QNqqXqoaodQk56FDtqcKeSENXe1wJlw5wQyDGoeufzdkQsfnhhR/oTb+Fh4wpQ129qSLf9KhajOTlR58Ss/YsHGb5q/2IqA/CcIij+zGzanzx585ai/vBkFtLIhIAqb9OLVDy8nXFyv3+omCAV49IRqF+X13z0seZFdEP0JLpDVcfuNqwqlB2Zyud1a/cGT3xF3gz29cO/D4tyJpWG6dRFgHjCRGFroKTLmy1vu6iFQn0ippM+k3VPRYqy5+QDizmn/8S5R3NORTsHPbY+1khYMK3dPzR86Fr8w1GvHs+ZVVNf+54fa5T2esj0GhC2kTnII+ZS/ShrjbJljiSpc+oyZ7iZBWL59sGPRBD1A5RId5HniTeDNw6bZJxDcVWFeD+gpXRKhHX0TKAbcdaZCt2Q8rsfHpjweu5OSSpS1K4zGhJ9jiXEYvmiIAcR88DQB/lhckM7WHsM80JiBrwlZi66CFYvjIcsfpQ36UiUIRw03l7D5/JqVQTI7hd1GEPFo+W65oBVJQ=
