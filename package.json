@@ -9,6 +9,10 @@
     "email": "developer@tomchentw.com",
     "url": "https://github.com/tomchentw"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomchentw/babel-multi-env"
+  },
   "bugs": {
     "url": "https://github.com/tomchentw/babel-multi-env/issues"
   },
@@ -16,7 +20,8 @@
   "bin": {
     "babel-multi-env": "./bin/babel-multi-env.js"
   },
-  "files": ["lib/", "src/", "CHANGELOG.md"],
+  "files": ["bin/", "lib/", "src/", "CHANGELOG.md"],
+  "keywords": ["babel"],
   "scripts": {
     "precommit": "lint-staged",
     "start": "babel-node --presets babel-preset-env src/runCLI.js",
