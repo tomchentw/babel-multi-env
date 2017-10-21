@@ -1,6 +1,6 @@
 {
   "name": "babel-multi-env",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description":
     "`babel` CLI replacement with multiple node version support by babel-preset-env",
   "license": "MIT",
