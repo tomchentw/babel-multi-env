@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import promisify from "util.promisify";
+import pathCompleteExtname from "path-complete-extname";
 import nativeOutputFile from "output-file";
 import _ from "lodash";
 import { transformFile as nativeTransformFile } from "babel-core";
@@ -18,7 +19,7 @@ export async function buildAndOutputVersions(
   { filename, parent }
 ) {
   const dirname = path.dirname(filename).replace(parent, "");
-  const extname = path.extname(filename);
+  const extname = pathCompleteExtname(filename);
   const basename = path.basename(filename, extname);
 
   await pMap(multiVersions, async version => {

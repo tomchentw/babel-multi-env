@@ -1,5 +1,6 @@
 import path from "path";
 import promisify from "util.promisify";
+import pathCompleteExtname from "path-complete-extname";
 import nativeOutputFile from "output-file";
 import _ from "lodash";
 import { transformFromAst } from "babel-core";
@@ -15,7 +16,7 @@ export async function buildAndOutputSwitcher(
   { filename, parent }
 ) {
   const dirname = path.dirname(filename).replace(parent, "");
-  const extname = path.extname(filename);
+  const extname = pathCompleteExtname(filename);
   const basename = path.basename(filename, extname);
   const indexDest = path.join(outDir, dirname, `${basename}${extname}`);
 
