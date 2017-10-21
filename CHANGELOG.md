@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/tomchentw/babel-multi-env/compare/v0.3.0...v0.4.0) (2017-10-21)
+
+
+### Bug Fixes
+
+* apply `path-complete-extname` ([9c58aba](https://github.com/tomchentw/babel-multi-env/commit/9c58aba))
+* **runCLI:** ensure directory comes out first ([0cbf2f0](https://github.com/tomchentw/babel-multi-env/commit/0cbf2f0))
+
+
+### Features
+
+* **package.json:** add `path-complete-extname` to dependencies ([b021c4e](https://github.com/tomchentw/babel-multi-env/commit/b021c4e))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/tomchentw/babel-multi-env/compare/v0.2.1...v0.3.0) (2017-10-21)
 
