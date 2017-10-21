@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buildSwitcher module buildAndOutputSwitcher function should compile file 1`] = `
+"var gte = require(\\"semver\\").gte;
+
+var version = process.version;
+
+if (gte(version, \\"8.7\\")) {
+  module.exports = require(\\"./buildAndOutputSwitcher__8.7__.js\\");
+} else if (gte(version, \\"7.6\\")) {
+  module.exports = require(\\"./buildAndOutputSwitcher__7.6__.js\\");
+} else if (gte(version, \\"6.0\\")) {
+  module.exports = require(\\"./buildAndOutputSwitcher__6.0__.js\\");
+} else if (gte(version, \\"4.0\\")) {
+  module.exports = require(\\"./buildAndOutputSwitcher__4.0__.js\\");
+} else {
+  module.exports = require(\\"./buildAndOutputSwitcher__0.12__.js\\");
+}"
+`;
