@@ -12,11 +12,12 @@ const { builders } = astTypes;
 export async function buildAndOutputSwitcher(
   { multiVersions, outDir },
   babelCoreOpts,
-  filename
+  { filename, parent }
 ) {
+  const dirname = path.dirname(filename).replace(parent, "");
   const extname = path.extname(filename);
   const basename = path.basename(filename, extname);
-  const indexDest = path.join(outDir, `${basename}${extname}`);
+  const indexDest = path.join(outDir, dirname, `${basename}${extname}`);
 
   const multiVersionsAst = makeRequireMultiVersions(
     multiVersions,

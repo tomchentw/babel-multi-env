@@ -15,8 +15,9 @@ export async function buildAndOutputVersions(
   babelPresetEnvOpts,
   babelPluginTransformRuntimeOpts,
   babelCoreOpts,
-  filename
+  { filename, parent }
 ) {
+  const dirname = path.dirname(filename).replace(parent, "");
   const extname = path.extname(filename);
   const basename = path.basename(filename, extname);
 
@@ -28,7 +29,11 @@ export async function buildAndOutputVersions(
       version
     );
     const result = await compile(filename, versionOpts);
-    const dest = path.join(outDir, `${basename}__${version}__${extname}`);
+    const dest = path.join(
+      outDir,
+      dirname,
+      `${basename}__${version}__${extname}`
+    );
     await outputFile(dest, result.code);
   });
 }

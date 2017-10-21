@@ -1,6 +1,7 @@
 import _ from "lodash";
 import semver from "semver";
 import glob from "glob";
+import globParent from "glob-parent";
 import commander from "commander";
 import chalk from "chalk";
 import figures from "figures";
@@ -125,25 +126,25 @@ commander.parse(process.argv);
 
 const errors = [];
 
-const GLOB_OPTIONS = {
-  absolute: true
-};
+const GLOB_OPTIONS = {};
 
-export const filenames = _.flowRight(
+export const filenameWithParentList = _.flowRight(
   _.uniq,
-  _.partial(
-    _.reduce,
-    _,
-    (globbed, input) => {
-      let output = glob.sync(input, GLOB_OPTIONS);
-      if (!output.length) output = [input];
-      return globbed.concat(output);
-    },
-    []
-  )
+  _.flatten,
+  _.partial(_.map, _, input => {
+    let output = glob.sync(input, GLOB_OPTIONS);
+    if (!output.length) {
+      output = [input];
+    }
+    const parent = globParent(input);
+    return _.map(output, filename => ({
+      parent,
+      filename
+    }));
+  })
 )(commander.args);
 
-if (_.isEmpty(filenames)) {
+if (_.isEmpty(filenameWithParentList)) {
   errors.push(chalk`at least one {green <file>} required`);
 }
 
