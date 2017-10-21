@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/tomchentw/babel-multi-env/compare/v0.2.1...v0.3.0) (2017-10-21)
+
+
+### Bug Fixes
+
+* output with dirname excluding glob parent ([fd90a5d](https://github.com/tomchentw/babel-multi-env/commit/fd90a5d))
+
+
+### Features
+
+* **package.json:** add `glob-parent` to dependencies ([70348aa](https://github.com/tomchentw/babel-multi-env/commit/70348aa))
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/tomchentw/babel-multi-env/compare/v0.2.0...v0.2.1) (2017-10-21)
 
