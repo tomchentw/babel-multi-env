@@ -17,7 +17,9 @@ describe("buildVersions module", () => {
         { multiVersions, outDir },
         {},
         {},
-        {},
+        {
+          babelrc: false
+        },
         path.join(
           __dirname,
           "../__fixtures__/buildAndOutputVersions.fixture.js"

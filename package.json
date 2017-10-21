@@ -39,9 +39,12 @@
   "lint-staged": {
     "*.{js,jsx,json,css}": ["prettier --write", "git add"]
   },
-  "jest": {
-    "transform": {
-      "^.+\\.js$": "<rootDir>/src/__setups__/transform.setup.js"
+  "babel": {
+    "plugins": ["transform-runtime"],
+    "env": {
+      "test": {
+        "presets": [["env"]]
+      }
     }
   },
   "dependencies": {

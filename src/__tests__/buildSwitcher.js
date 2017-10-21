@@ -13,7 +13,9 @@ describe("buildSwitcher module", () => {
     it("should compile file", async () => {
       await buildAndOutputSwitcher(
         { multiVersions, outDir },
-        {},
+        {
+          babelrc: false
+        },
         "buildAndOutputSwitcher.js"
       );
       const content = await readFile(
