@@ -1,13 +1,19 @@
 import path from "path";
 import fs from "fs";
+import nativeOutputFile from "output-file";
 import promisify from "util.promisify";
 
+const outputFile = promisify(nativeOutputFile);
 const readFile = promisify(fs.readFile);
 
 describe("buildVersions module", () => {
   const { buildAndOutputVersions } = require("../buildVersions");
   const multiVersions = ["8.7", "7.6", "6.0", "4.0", "0.12"];
   const outDir = path.join(__dirname, "../../tmp/buildVersions");
+
+  beforeAll(async () => {
+    await outputFile(path.join(outDir, ".gitkeep"), "");
+  });
 
   describe("buildAndOutputVersions function", () => {
     const VERSIONS = ["8.7", "7.6", "6.0", "4.0", "0.12"];
