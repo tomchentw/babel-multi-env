@@ -1,5 +1,5 @@
 # babel-multi-env
-> `babel` CLI replacement with multiple node version support by babel-preset-env
+> `babel` CLI replacement with multiple node version support by `babel-preset-env` and `babel-plugin-transform-runtime`. Useful for node.js libraries/modules
 
 [![Version][npm-image]][npm-url] [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][codeclimate-coverage-image]][codeclimate-coverage-url] [![Dependencies][gemnasium-image]][gemnasium-url] [![Gitter][gitter-image]][gitter-url]
 
@@ -317,6 +317,27 @@ npm i --save-dev babel-multi-env
 yarn add --dev babel-multi-env
 ```
 
+### Note on your `peerDependencies`
+
+There are currently five peerDependencies listed under the _package.json_ for `babel-multi-env`. Be sure not to screw up their versions sicne `babel@^7` are currently in **beta** and can be found under the _next_ dist-tags on npm.
+
+#### `dependencies`
+
+Your library should depends on these two:
+
+* "babel-runtime": "^7.0.0-beta.3"
+* "semver": "^5.4.1"
+
+since they'll be used during the runtime.
+
+#### `devDependencies`
+
+For the code generation only:
+
+* "babel-core": "^7.0.0-beta.3",
+* "babel-plugin-transform-runtime": "^7.0.0-beta.3",
+* "babel-preset-env": "^7.0.0-beta.3",  
+
 
 ## Options
 
@@ -341,6 +362,13 @@ yarn add --dev babel-multi-env
     -h, --help                   output usage information
 
 ```
+
+
+## Examples
+
+* [unused-files-webpack-plugin](https://github.com/tomchentw/unused-files-webpack-plugin)
+* [npm-auto-install-webpack-plugin](https://github.com/tomchentw/npm-auto-install-webpack-plugin)
+* ……and, [babel-multi-env](https://github.com/tomchentw/babel-multi-env)
 
 
 [npm-image]: https://img.shields.io/npm/v/babel-multi-env.svg?style=flat-square
