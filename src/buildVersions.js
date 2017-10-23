@@ -2,12 +2,11 @@ import path from "path";
 import fs from "fs";
 import promisify from "util.promisify";
 import pathCompleteExtname from "path-complete-extname";
-import nativeOutputFile from "output-file";
 import _ from "lodash";
 import { transformFile as nativeTransformFile } from "babel-core";
 
+const writeFile = promisify(fs.writeFile);
 const transformFile = promisify(nativeTransformFile);
-const outputFile = promisify(nativeOutputFile);
 
 const pMap = _.flowRight(_.bind(Promise.all, Promise), _.map);
 
@@ -35,7 +34,7 @@ export async function buildAndOutputVersions(
       dirname,
       `${basename}__${version}__${extname}`
     );
-    await outputFile(dest, result.code);
+    await writeFile(dest, result.code);
   });
 }
 

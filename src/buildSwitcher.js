@@ -1,12 +1,12 @@
 import path from "path";
+import fs from "fs";
 import promisify from "util.promisify";
 import pathCompleteExtname from "path-complete-extname";
-import nativeOutputFile from "output-file";
 import _ from "lodash";
 import { transformFromAst } from "babel-core";
 import astTypes from "ast-types";
 
-const outputFile = promisify(nativeOutputFile);
+const writeFile = promisify(fs.writeFile);
 
 const { builders } = astTypes;
 
@@ -26,7 +26,7 @@ export async function buildAndOutputSwitcher(
     extname
   );
   const multiVersionsResult = compileAst(multiVersionsAst, babelCoreOpts);
-  await outputFile(indexDest, multiVersionsResult.code);
+  await writeFile(indexDest, multiVersionsResult.code);
 }
 
 export function makeRequireMultiVersions(multiVersions, basename, extname) {
