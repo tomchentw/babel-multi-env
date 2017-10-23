@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/tomchentw/babel-multi-env/compare/v0.4.0...v0.5.0) (2017-10-23)
+
+
+### Bug Fixes
+
+* **package.json:** remove `output-file` from dependencies ([a075a01](https://github.com/tomchentw/babel-multi-env/commit/a075a01))
+* **runCLI:** mkdirp sequentially first ([c0fd5e2](https://github.com/tomchentw/babel-multi-env/commit/c0fd5e2))
+
+
+### Features
+
+* **package.json:** add `mkdirp` to dependencies ([9e39db9](https://github.com/tomchentw/babel-multi-env/commit/9e39db9))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/tomchentw/babel-multi-env/compare/v0.3.0...v0.4.0) (2017-10-21)
 
