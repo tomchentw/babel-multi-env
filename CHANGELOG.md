@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/tomchentw/babel-multi-env/compare/v0.5.0...v0.6.0) (2017-10-27)
+
+
+### Features
+
+* **package.json:** add `yargs` to dependencies ([1009ad8](https://github.com/tomchentw/babel-multi-env/commit/1009ad8))
+* **parseCLI:** migrate to `yargs` ([10d3444](https://github.com/tomchentw/babel-multi-env/commit/10d3444))
+
+
+### BREAKING CHANGES
+
+* **parseCLI:** `<files>` are now an required option `--given`
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/tomchentw/babel-multi-env/compare/v0.4.0...v0.5.0) (2017-10-23)
 

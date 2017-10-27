@@ -1,6 +1,6 @@
 {
   "name": "babel-multi-env",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description":
     "`babel` CLI replacement with multiple node version support by `babel-preset-env` and `babel-plugin-transform-runtime`. Useful for node.js libraries/modules",
   "license": "MIT",
