@@ -30,7 +30,7 @@ export async function demoBumpVersion(nextVersion = "1.0.0") {
 with the command:
 
 ```sh
-yarn babel-multi-env --multi-versions 8.0.0,6.0.0,4.0.0,0.12.0,0.10.0 --out-dir tmp src/__fixtures__/buildAndOutputVersions.fixture.js
+yarn babel-multi-env --multi-versions 8.0.0 6.0.0 4.0.0 0.12.0 0.10.0 --given src/__fixtures__/buildAndOutputVersions.fixture.js --out-dir tmp
 ```
 
 and output these files:
@@ -341,26 +341,37 @@ For the code generation only:
 
 ## Options
 
-<img width="889" alt="screen shot 2017-10-21 at 12 27 57 am" src="https://user-images.githubusercontent.com/922234/31832251-e805d2de-b5f8-11e7-90cb-471e988de566.png">
+<img width="889" alt="screen shot 2017-10-27 at 11 20 38 am" src="https://user-images.githubusercontent.com/922234/32086588-e8bae1be-bb08-11e7-98e0-436392094b14.png">
 
 ```sh
+[babel-multi-env]
+  --multi-versions  list of supported semver versions. Example: 8.0.0 6.0.0
+                    4.0.0                                     [array] [required]
+  --given           source glob patterns                      [array] [required]
+  --out-dir         compile into an output directory         [string] [required]
 
-  Usage: babel-multi-env [options] <files ...>
+[babel-preset-env]
+  --use-built-ins  apply babel-preset-env for polyfills with "useBuiltIns":
+                   "usage" (via babel-polyfill)      [string] [choices: "usage"]
 
+[babel-plugin-transform-runtime]
+  --helpers      Enables inlined Babel helpers (classCallCheck, extends, etc.)
+                 are replaced with calls to moduleName [boolean] [default: true]
+  --polyfill     Enables new built-ins (Promise, Set, Map, etc.) are transformed
+                 to use a non-global polluting polyfill[boolean] [default: true]
+  --regenerator  Enables generator functions are transformed to use a
+                 regenerator runtime that does not pollute the global scope
+                                                       [boolean] [default: true]
+  --module-name  sets the name/path of the module used when importing helpers
+                                                                        [string]
 
-  Options:
+[babel-core]
+  --presets  list of preset names                                        [array]
+  --plugins  list of plugins names                                       [array]
 
-    -x, --multi-versions <list>  [babel-multi-env] comma-separated list of supported semver versions
-    -d, --out-dir <outDir>       [babel-multi-env] Compile an input directory of modules into an output directory
-    --use-built-ins-usage        [babel-preset-env] Apply @babel/preset-env for polyfills with "useBuiltIns": "usage" (via @babel/polyfill)
-    --no-helpers                 [babel-plugin-transform-runtime] Disables inlined Babel helpers (classCallCheck, extends, etc.) are replaced with calls to moduleName
-    --no-polyfill                [babel-plugin-transform-runtime] Disables new built-ins (Promise, Set, Map, etc.) are transformed to use a non-global polluting polyfill
-    --no-regenerator             [babel-plugin-transform-runtime] Disables generator functions are transformed to use a regenerator runtime that does not pollute the global scope
-    --moduleName [moduleName]    [babel-plugin-transform-runtime] Sets the name/path of the module used when importing helpers
-    --presets [list]             [babel-core] comma-separated list of preset names
-    --plugins [list]             [babel-core] comma-separated list of plugins names
-    -h, --help                   output usage information
-
+Options:
+  --help, -h     Show help                                             [boolean]
+  --version, -v  Show version number                                   [boolean]
 ```
 
 
