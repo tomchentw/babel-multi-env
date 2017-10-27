@@ -29,7 +29,7 @@
     "posttest": "rimraf tmp",
     "prebuild:lib": "rimraf lib",
     "build:lib":
-      "npm start -- --multi-versions 8.0.0,6.0.0,4.0.0,0.12.0,0.10.0 --out-dir lib 'src/*.js'",
+      "npm start -- --multi-versions 8.0.0 6.0.0 4.0.0 0.12.0 0.10.0 --given 'src/*.js' --out-dir lib ",
     "precommit:lib": "npm run build:lib",
     "commit:lib":
       "git add -A && git commit -m 'chore(lib): compile from src with `babel-multi-env`'",
