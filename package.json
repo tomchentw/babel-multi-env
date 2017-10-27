@@ -50,8 +50,6 @@
   "dependencies": {
     "ast-types": "^0.9.14",
     "chalk": "^2.2.0",
-    "commander": "^2.11.0",
-    "figures": "^2.0.0",
     "glob": "^7.1.2",
     "glob-parent": "^3.1.0",
     "lodash": "^4.17.4",
