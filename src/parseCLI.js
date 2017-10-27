@@ -2,129 +2,104 @@ import _ from "lodash";
 import semver from "semver";
 import glob from "glob";
 import globParent from "glob-parent";
-import commander from "commander";
+import yargs from "yargs";
 import chalk from "chalk";
-import figures from "figures";
-import taggedTemplateLiteral from "babel-runtime/helpers/taggedTemplateLiteral";
 
-(function enableChalkCommanderOptionFlags(scoped) {
-  /** https://github.com/tj/commander.js/blob/master/index.js#L1088
-   * Pad `str` to `width`.
-   *
-   * @param {String} str
-   * @param {Number} width
-   * @return {String}
-   * @api private
-   */
-  function coloredPad(str, width, coloredStr = str) {
-    var len = Math.max(0, width - str.length);
-    return coloredStr + Array(len + 1).join(" ");
-  }
-  const { Command } = commander;
-  const nativeOptionFn = Command.prototype.option;
+const BABEL_MULTI_ENV_GROUP = chalk`{green [babel-multi-env]}`;
+const BABEL_PRESET_ENV_GROUP = chalk`{blue [babel-preset-env]}`;
+const BABEL_PLUGIN_TRANSFORM_RUNTIME_GROUP = chalk`{magenta [babel-plugin-transform-runtime]}`;
+const BABEL_CORE_GROUP = chalk`{cyan [babel-core]}`;
 
-  Command.prototype.option = function(...args) {
-    const [flags] = args;
-    args[0] = flags.replace(/{\S+ (.+)}/, "$1");
-    const returnValue = nativeOptionFn.apply(this, args);
-    // https://github.com/tj/commander.js/blob/master/index.js#L39
-    // https://github.com/tj/commander.js/blob/master/index.js#L394
-    _.last(this.options).coloredFlags = chalk(
-      taggedTemplateLiteral([flags], [flags])
-    );
-    return returnValue;
-  };
-
-  Command.prototype.optionHelp = function() {
-    // https://github.com/tj/commander.js/blob/master/index.js#L949
-    var width = this.largestOptionLength();
-    // Append the help information
-    return this.options
-      .map(
-        option =>
-          coloredPad(option.flags, width, option.coloredFlags) +
-          "  " +
-          option.description +
-          (option.defaultValue !== undefined
-            ? " (default: " + option.defaultValue + ")"
-            : "")
-      )
-      .concat([
-        coloredPad("-h, --help", width) + "  " + "output usage information"
-      ])
-      .join("\n");
-  };
-})();
-
-(function setupBabelMultiEnvOptions() {
-  commander.option(
-    `-x, {green --multi-versions} <list>`,
-    chalk`{green [babel-multi-env]} comma-separated list of supported semver versions`,
-    collect,
-    []
-  );
-  commander.option(
-    `-d, {green --out-dir} <outDir>`,
-    chalk`{green [babel-multi-env]} Compile an input directory of modules into an output directory`,
-    _.toString
-  );
-})();
-
-(function setupBabelPresetEnvOptions() {
-  commander.option(
-    `{blue --use-built-ins-usage}`,
-    chalk`{blue [babel-preset-env]} Apply @babel/preset-env for polyfills with "useBuiltIns": "usage" (via @babel/polyfill)`,
-    booleanify
-  );
-})();
-
-(function setupBabelPluginTransformRuntimeOptions() {
-  commander.option(
-    `{magenta --no-helpers}`,
-    chalk`{magenta [babel-plugin-transform-runtime]} Disables inlined Babel helpers (classCallCheck, extends, etc.) are replaced with calls to moduleName`,
-    booleanify,
-    false
-  );
-  commander.option(
-    `{magenta --no-polyfill}`,
-    chalk`{magenta [babel-plugin-transform-runtime]} Disables new built-ins (Promise, Set, Map, etc.) are transformed to use a non-global polluting polyfill`,
-    booleanify,
-    false
-  );
-  commander.option(
-    `{magenta --no-regenerator}`,
-    chalk`{magenta [babel-plugin-transform-runtime]} Disables generator functions are transformed to use a regenerator runtime that does not pollute the global scope`,
-    booleanify,
-    false
-  );
-  commander.option(
-    `{magenta --moduleName} [moduleName]`,
-    chalk`{magenta [babel-plugin-transform-runtime]} Sets the name/path of the module used when importing helpers`,
-    _.toString,
-    "babel-runtime"
-  );
-})();
-
-(function setupBabelCoreOptions() {
-  commander.option(
-    `{cyan --presets} [list]`,
-    chalk`{cyan [babel-core]} comma-separated list of preset names`,
-    collect,
-    []
-  );
-
-  commander.option(
-    `{cyan --plugins} [list]`,
-    chalk`{cyan [babel-core]} comma-separated list of plugins names`,
-    collect,
-    []
-  );
-})();
-
-commander.usage(chalk`[options] {green <files ...>}`);
-commander.parse(process.argv);
-
-const errors = [];
+const argv = yargs
+  .help("help")
+  .alias("help", "h")
+  .version()
+  .alias("version", "v")
+  .options({
+    // --- BABEL_MULTI_ENV_GROUP ---
+    "multi-versions": {
+      demandOption: true,
+      type: "array",
+      description:
+        "list of supported semver versions. Example: 8.0.0 6.0.0 4.0.0",
+      group: BABEL_MULTI_ENV_GROUP,
+      coerce(arg) {
+        const iv = arg.filter(it => !semver.valid(it)); // iv = invalidVersions
+        if (iv.length > 0) {
+          throw new Error(
+            chalk`--multi-versions {red ${iv.join(", ")}} ${iv.length > 1
+              ? "are"
+              : "is"} invalid semver version${iv.length > 1 ? "s" : ""}`
+          );
+        } else {
+          arg.sort(semver.compare).reverse();
+          return arg;
+        }
+      }
+    },
+    given: {
+      demandOption: true,
+      type: "array",
+      description: "source glob patterns",
+      group: BABEL_MULTI_ENV_GROUP
+    },
+    "out-dir": {
+      demandOption: true,
+      type: "string",
+      description: "compile into an output directory",
+      group: BABEL_MULTI_ENV_GROUP
+    },
+    // --- BABEL_PRESET_ENV_GROUP ---
+    "use-built-ins": {
+      type: "string",
+      description:
+        'apply babel-preset-env for polyfills with "useBuiltIns": "usage" (via babel-polyfill)',
+      group: BABEL_PRESET_ENV_GROUP,
+      choices: ["usage"]
+    },
+    // --- BABEL_PLUGIN_TRANSFORM_RUNTIME_GROUP ---
+    helpers: {
+      type: "boolean",
+      description:
+        "Enables inlined Babel helpers (classCallCheck, extends, etc.) are replaced with calls to moduleName",
+      default: true,
+      group: BABEL_PLUGIN_TRANSFORM_RUNTIME_GROUP
+    },
+    polyfill: {
+      type: "boolean",
+      description:
+        "Enables new built-ins (Promise, Set, Map, etc.) are transformed to use a non-global polluting polyfill",
+      default: true,
+      group: BABEL_PLUGIN_TRANSFORM_RUNTIME_GROUP
+    },
+    regenerator: {
+      type: "boolean",
+      description:
+        "Enables generator functions are transformed to use a regenerator runtime that does not pollute the global scope",
+      default: true,
+      group: BABEL_PLUGIN_TRANSFORM_RUNTIME_GROUP
+    },
+    "module-name": {
+      type: "string",
+      description:
+        "sets the name/path of the module used when importing helpers",
+      example: "babel-runtime",
+      group: BABEL_PLUGIN_TRANSFORM_RUNTIME_GROUP
+    },
+    // --- BABEL_CORE_GROUP ---
+    presets: {
+      type: "array",
+      description: "list of preset names",
+      group: BABEL_CORE_GROUP
+    },
+    plugins: {
+      type: "array",
+      description: "list of plugins names",
+      group: BABEL_CORE_GROUP
+    }
+  })
+  .strict()
+  .parse();
 
 const GLOB_OPTIONS = {};
 
@@ -142,77 +117,14 @@ export const filenameWithParentList = _.flowRight(
       filename
     }));
   })
-)(commander.args);
+)(argv.given);
 
-if (_.isEmpty(filenameWithParentList)) {
-  errors.push(chalk`at least one {green <file>} required`);
-}
-
-const opts = commander.opts();
-
-export const babelMultiEnvOpts = _.pick(opts, ["multiVersions", "outDir"]);
-export const babelPresetEnvOpts = {
-  useBuiltIns: opts.useBuiltInsUsage // use-built-ins-usage
-};
-export const babelPluginTransformRuntimeOpts = _.pick(opts, [
+export const babelMultiEnvOpts = _.pick(argv, ["multiVersions", "outDir"]);
+export const babelPresetEnvOpts = _.pick(argv, ["useBuiltIns"]);
+export const babelPluginTransformRuntimeOpts = _.pick(argv, [
   "helpers",
   "polyfill",
   "regenerator",
   "moduleName"
 ]);
-export const babelCoreOpts = _.omit(opts, [
-  "useBuiltInsUsage",
-  ..._.keys(babelMultiEnvOpts),
-  ..._.keys(babelPresetEnvOpts),
-  ..._.keys(babelPluginTransformRuntimeOpts)
-]);
-
-if (_.isEmpty(babelMultiEnvOpts.multiVersions)) {
-  errors.push(chalk`{green --multi-versions} required`);
-} else {
-  const allValid = babelMultiEnvOpts.multiVersions.reduce((acc, it) => {
-    if (!semver.valid(it)) {
-      errors.push(
-        chalk`{green --multi-versions} {red ${it}} invalid semver version`
-      );
-      return false;
-    }
-    return acc;
-  }, true);
-  if (allValid) {
-    babelMultiEnvOpts.multiVersions.sort(semver.compare).reverse();
-  }
-}
-
-if (
-  !_.isString(babelMultiEnvOpts.outDir) ||
-  babelMultiEnvOpts.outDir.length === 0
-) {
-  errors.push(chalk`{green --out-dir} required`);
-}
-
-if (!_.isEmpty(errors)) {
-  errors.forEach(it => console.error(chalk`{red ${figures.cross} } ${it}`));
-  process.exit(2);
-}
-
-function booleanify(val) {
-  if (val === "true" || val == 1) {
-    return true;
-  }
-
-  if (val === "false" || val == 0 || !val) {
-    return false;
-  }
-
-  return val;
-}
-
-function collect(value, previousValue) {
-  if (_.isString(value)) {
-    const values = value.split(",");
-    return previousValue ? previousValue.concat(values) : values;
-  }
-  // If the user passed the option with no value, like "babel file.js --presets", do nothing.
-  return previousValue;
-}
+export const babelCoreOpts = _.pick(argv, ["presets", "plugins"]);
