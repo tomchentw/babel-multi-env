@@ -347,7 +347,7 @@ And, these three for the code generation only:
 
 ## Options
 
-<img width="889" alt="screen shot 2017-10-27 at 11 20 38 am" src="https://user-images.githubusercontent.com/922234/32086588-e8bae1be-bb08-11e7-98e0-436392094b14.png">
+<img width="889" alt="screen shot 2017-11-01 at 10 55 57 am" src="https://user-images.githubusercontent.com/922234/32258010-4949f072-bef3-11e7-92f2-e68e55378688.png">
 
 ```sh
 [babel-multi-env]
@@ -369,7 +369,7 @@ And, these three for the code generation only:
                  regenerator runtime that does not pollute the global scope
                                                        [boolean] [default: true]
   --module-name  sets the name/path of the module used when importing helpers
-                                                                        [string]
+                                               [string] [default: babel-runtime]
 
 [babel-core]
   --presets  list of preset names                                        [array]
