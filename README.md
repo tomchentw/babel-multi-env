@@ -8,7 +8,7 @@
 
 Transforms:
 
-### src/__fixtures__/buildAndOutputVersions.fixture.js
+### [example/src/index.js](https://github.com/tomchentw/babel-multi-env/blob/master/example/src/index.js)
 
 ```js
 import fs from "fs";
@@ -30,95 +30,109 @@ export async function demoBumpVersion(nextVersion = "1.0.0") {
 with the command:
 
 ```sh
-yarn babel-multi-env --multi-versions 8.0.0 6.0.0 4.0.0 0.12.0 0.10.0 --given src/__fixtures__/buildAndOutputVersions.fixture.js --out-dir tmp
+cd example
+yarn babel-multi-env --multi-versions 8.0.0 6.0.0 4.0.0 0.12.0 0.10.0 --given src/index.js --out-dir lib
 ```
 
 and output these files:
 
 ```sh
-tmp/buildAndOutputVersions.fixture.js
-tmp/buildAndOutputVersions.fixture__0.10.0__.js
-tmp/buildAndOutputVersions.fixture__0.12.0__.js
-tmp/buildAndOutputVersions.fixture__4.0.0__.js
-tmp/buildAndOutputVersions.fixture__6.0.0__.js
-tmp/buildAndOutputVersions.fixture__8.0.0__.js
+example/lib/index.js
+example/lib/index__0.10.0__.js
+example/lib/index__0.12.0__.js
+example/lib/index__4.0.0__.js
+example/lib/index__6.0.0__.js
+example/lib/index__8.0.0__.js
 ```
 
 where
 
-### tmp/buildAndOutputVersions.fixture.js
+### [example/lib/index.js](https://github.com/tomchentw/babel-multi-env/blob/master/example/lib/index.js)
 
 ```js
 var gte = require("semver").gte;
+
 var version = process.version;
 
 if (gte(version, "8.0.0")) {
-  module.exports = require("./buildAndOutputVersions.fixture__8.0.0__.js");
+  module.exports = require("./index__8.0.0__.js");
 } else if (gte(version, "6.0.0")) {
-  module.exports = require("./buildAndOutputVersions.fixture__6.0.0__.js");
+  module.exports = require("./index__6.0.0__.js");
 } else if (gte(version, "4.0.0")) {
-  module.exports = require("./buildAndOutputVersions.fixture__4.0.0__.js");
+  module.exports = require("./index__4.0.0__.js");
 } else if (gte(version, "0.12.0")) {
-  module.exports = require("./buildAndOutputVersions.fixture__0.12.0__.js");
+  module.exports = require("./index__0.12.0__.js");
 } else {
-  module.exports = require("./buildAndOutputVersions.fixture__0.10.0__.js");
+  module.exports = require("./index__0.10.0__.js");
 }
 ```
 
 
-### tmp/buildAndOutputVersions.fixture__8.0.0__.js
+### [example/lib/index__8.0.0__.js](https://github.com/tomchentw/babel-multi-env/blob/master/example/lib/index__8.0.0__.js)
 
 ```js
 "use strict";
-
 var _interopRequireDefault = require("babel-runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.demoBumpVersion = demoBumpVersion;
-var _stringify = _interopRequireDefault(require("babel-runtime/core-js/json/stringify"));
+var _stringify = _interopRequireDefault(
+  require("babel-runtime/core-js/json/stringify")
+);
 var _fs = _interopRequireDefault(require("fs"));
 var _util = _interopRequireDefault(require("util.promisify"));
-
 async function demoBumpVersion(nextVersion = "1.0.0") {
-  const content = await (0, _util.default)(_fs.default.readFile)("package.json", "utf8");
+  const content = await (0, _util.default)(_fs.default.readFile)(
+    "package.json",
+    "utf8"
+  );
   const json = JSON.parse(content);
   json.version = nextVersion;
-  await (0, _util.default)(_fs.default.writeFile)("package.json", (0, _stringify.default)(json, null, 4), "utf8");
+  await (0, _util.default)(_fs.default.writeFile)(
+    "package.json",
+    (0, _stringify.default)(json, null, 4),
+    "utf8"
+  );
   return () => console.log(`Successfully bumped version to: ${nextVersion}`);
 }
 ```
 
 
-### tmp/buildAndOutputVersions.fixture__6.0.0__.js
+### [example/lib/index__6.0.0__.js](https://github.com/tomchentw/babel-multi-env/blob/master/example/lib/index__6.0.0__.js)
 
 ```js
 "use strict";
-
 var _interopRequireDefault = require("babel-runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.demoBumpVersion = void 0;
-var _stringify = _interopRequireDefault(require("babel-runtime/core-js/json/stringify"));
-var _asyncToGenerator2 = _interopRequireDefault(require("babel-runtime/helpers/asyncToGenerator"));
+var _stringify = _interopRequireDefault(
+  require("babel-runtime/core-js/json/stringify")
+);
+var _asyncToGenerator2 = _interopRequireDefault(
+  require("babel-runtime/helpers/asyncToGenerator")
+);
 var _fs = _interopRequireDefault(require("fs"));
 var _util = _interopRequireDefault(require("util.promisify"));
-
 let demoBumpVersion = (() => {
-  var _ref = (0, _asyncToGenerator2.default)(function* (nextVersion = "1.0.0") {
-    const content = yield (0, _util.default)(_fs.default.readFile)("package.json", "utf8");
+  var _ref = (0, _asyncToGenerator2.default)(function*(nextVersion = "1.0.0") {
+    const content = yield (0, _util.default)(_fs.default.readFile)(
+      "package.json",
+      "utf8"
+    );
     const json = JSON.parse(content);
     json.version = nextVersion;
-    yield (0, _util.default)(_fs.default.writeFile)("package.json", (0, _stringify.default)(json, null, 4), "utf8");
+    yield (0,
+    _util.default)(_fs.default.writeFile)("package.json", (0, _stringify.default)(json, null, 4), "utf8");
     return () => console.log(`Successfully bumped version to: ${nextVersion}`);
   });
-
   return function demoBumpVersion() {
     return _ref.apply(this, arguments);
   };
 })();
-
 exports.demoBumpVersion = demoBumpVersion;
 ```
 
@@ -128,9 +142,8 @@ exports.demoBumpVersion = demoBumpVersion;
   <summary>More sample code for node@4, node@0.12 and node@0.10</summary>
 
 ```js
-/* tmp/buildAndOutputVersions.fixture__4.0.0__.js */
+/* lib/index__4.0.0__.js */
 "use strict";
-
 var _interopRequireDefault = require("babel-runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -182,15 +195,13 @@ var demoBumpVersion = function () {
     return _ref.apply(this, arguments);
   };
 }();
-
 exports.demoBumpVersion = demoBumpVersion;
 ```
 
 
 ```js
-/* tmp/buildAndOutputVersions.fixture__0.12.0__.js */
+/* lib/index__0.12.0__.js */
 "use strict";
-
 var _interopRequireDefault = require("babel-runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -201,7 +212,6 @@ var _stringify = _interopRequireDefault(require("babel-runtime/core-js/json/stri
 var _asyncToGenerator2 = _interopRequireDefault(require("babel-runtime/helpers/asyncToGenerator"));
 var _fs = _interopRequireDefault(require("fs"));
 var _util = _interopRequireDefault(require("util.promisify"));
-
 var demoBumpVersion = function () {
   var _ref = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
@@ -242,15 +252,13 @@ var demoBumpVersion = function () {
     return _ref.apply(this, arguments);
   };
 }();
-
 exports.demoBumpVersion = demoBumpVersion;
 ```
 
 
 ```js
-/* tmp/buildAndOutputVersions.fixture__0.10.0__.js */
+/* lib/index__0.10.0__.js */
 "use strict";
-
 var _interopRequireDefault = require("babel-runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -261,7 +269,6 @@ var _stringify = _interopRequireDefault(require("babel-runtime/core-js/json/stri
 var _asyncToGenerator2 = _interopRequireDefault(require("babel-runtime/helpers/asyncToGenerator"));
 var _fs = _interopRequireDefault(require("fs"));
 var _util = _interopRequireDefault(require("util.promisify"));
-
 var demoBumpVersion = function () {
   var _ref = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
@@ -302,7 +309,6 @@ var demoBumpVersion = function () {
     return _ref.apply(this, arguments);
   };
 }();
-
 exports.demoBumpVersion = demoBumpVersion;
 ```
 
@@ -317,22 +323,22 @@ npm i --save-dev babel-multi-env
 yarn add --dev babel-multi-env
 ```
 
-### Note on your `peerDependencies`
+### Note on the `peerDependencies`
 
 There are currently five peerDependencies listed under the _package.json_ for `babel-multi-env`. Be sure not to screw up their versions sicne `babel@^7` are currently in **beta** and can be found under the _next_ dist-tags on npm.
 
 #### `dependencies`
 
-Your library should depends on these two:
+Your should add these to your `dependencies`:
 
 * "babel-runtime": "^7.0.0-beta.3"
 * "semver": "^5.4.1"
 
-since they'll be used during the runtime.
+since they'll be used in the runtime.
 
 #### `devDependencies`
 
-For the code generation only:
+And, these three for the code generation only:
 
 * "babel-core": "^7.0.0-beta.3",
 * "babel-plugin-transform-runtime": "^7.0.0-beta.3",
