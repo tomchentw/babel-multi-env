@@ -34,5 +34,6 @@ ratings:
 
 exclude_paths:
 - coverage/**
+- example/**
 - lib/**
 
