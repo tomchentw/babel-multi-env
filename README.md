@@ -1,7 +1,7 @@
 # babel-multi-env
 > `babel` CLI replacement with multiple node version support by `babel-preset-env` and `babel-plugin-transform-runtime`. Useful for node.js libraries/modules
 
-[![Version][npm-image]][npm-url] [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-image]][codeclimate-url] [![Coverage][codeclimate-coverage-image]][codeclimate-coverage-url] [![Dependencies][gemnasium-image]][gemnasium-url] [![Gitter][gitter-image]][gitter-url]
+[![Version][npm-image]][npm-url] [![Travis CI][travis-image]][travis-url] [![Quality][codeclimate-maintainability-image]][codeclimate-maintainability-url] [![Coverage][codeclimate-c-image]][codeclimate-c-url] [![Dependencies][gemnasium-image]][gemnasium-url] [![Gitter][gitter-image]][gitter-url]
 
 
 ## Usage
@@ -393,10 +393,10 @@ Options:
 
 [travis-image]: https://img.shields.io/travis/tomchentw/babel-multi-env.svg?style=flat-square
 [travis-url]: https://travis-ci.org/tomchentw/babel-multi-env
-[codeclimate-image]: https://img.shields.io/codeclimate/github/tomchentw/babel-multi-env.svg?style=flat-square
-[codeclimate-url]: https://codeclimate.com/github/tomchentw/babel-multi-env
-[codeclimate-coverage-image]: https://img.shields.io/codeclimate/coverage/github/tomchentw/babel-multi-env.svg?style=flat-square
-[codeclimate-coverage-url]: https://codeclimate.com/github/tomchentw/babel-multi-env
+[codeclimate-maintainability-image]: https://img.shields.io/codeclimate/maintainability/tomchentw/babel-multi-env.svg?style=flat-square
+[codeclimate-maintainability-url]: https://codeclimate.com/github/tomchentw/babel-multi-env
+[codeclimate-c-image]: https://img.shields.io/codeclimate/c/tomchentw/babel-multi-env.svg?style=flat-square
+[codeclimate-c-url]: https://codeclimate.com/github/tomchentw/babel-multi-env
 [gemnasium-image]: https://img.shields.io/gemnasium/tomchentw/babel-multi-env.svg?style=flat-square
 [gemnasium-url]: https://gemnasium.com/tomchentw/babel-multi-env
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
