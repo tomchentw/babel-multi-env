@@ -36,4 +36,5 @@ exclude_paths:
 - coverage/**
 - example/**
 - lib/**
-
+- **/__tests__/
+- **/__fixtures__/
